@@ -1,0 +1,74 @@
+@charset "UTF-8";
+* {
+	padding:0;
+	margin:0;
+}
+
+#container {
+	width:1000px;
+	margin: auto;
+}
+
+header {	
+	width:100%;
+	margin:50px 0 20px 0;
+}
+
+#menu {
+	width:100%;
+	height:100%;
+	list-style: none;
+	display:flex;
+	justify-content: space-between;	
+}
+
+#menu li {
+	width:100px;
+	height:100px;	
+}
+/*
+#menu li input{
+	width:100%;
+	height:60%;
+	border: 2px solid #34495e;
+	background-color:white;
+	color: #34495e;
+}
+*/
+#menu li input{
+
+	width:100%;
+	height:60%;
+	border: none;
+	background-color:#061a5ce5;
+	color:#fff;
+	position:relative;
+  }
+ 
+  #menu li input:hover{
+	background-color:#324481;
+	color:#fff;
+	position:relative;
+	top:-10px;
+  }
+
+#buttonarea{
+	align-items: center;
+  }
+#buttonarea input{
+	background-color:#324481;
+	color:#fff;
+	width:100px;
+	height:50px;
+	border:none;
+	
+}
+#map {
+	width:1000px;
+	height:500px;
+
+}
+
+#result{
+	height:100px;
+}
