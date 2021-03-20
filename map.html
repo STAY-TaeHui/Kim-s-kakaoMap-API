@@ -266,12 +266,10 @@
 			memberinfo += students[i].name;
 			let info = document.createTextNode(memberinfo);
 			document.getElementById("member"+i).appendChild(info);
-			document.getElementById("member"+i).setAttribute("name",memberinfo);
 		} else{
 			memberinfo += students[i].department + "조 " + students[i].name;
 			let info = document.createTextNode(memberinfo);
 			document.getElementById("member"+i).appendChild(info);
-			document.getElementById("member"+i).setAttribute("name",memberinfo);
 		}
 	}
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
@@ -433,15 +431,14 @@
 		let searchval = document.getElementById("search").value;
 		let members = document.getElementsByClassName("members");
 
-		//for( let i =0; i < members.length; i++){
-			if( members.name != searchval ){
-				$(members).hide();
-				console.log(searchval);
-			} else{
-				$(members).show();
+		for( let i =0; i < members.length; i++){
+			if( !members[i].innerHTML.includes(searchval) ){
+				members[i].style.display = "none";
+				//console.log(searchval);
+			} else{ // 이 블럭이 없으면 검색 결과 내에서만 재검색이 된다
+				members[i].style.display = "block";
 			}
-		//}
-		
+		}		
 	}
 </script>
 </html>
