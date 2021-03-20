@@ -27,6 +27,14 @@
 		
 		// 왼쪽 리스트를 담당할 박스
 		let aside = document.createElement("aside");
+
+		// 왼쪽 리스트박스 검색
+		let search = document.createElement("input");
+		search.setAttribute("id","search");
+		search.setAttribute("value","검색");
+		search.setAttribute("onkeypress","if(event.keyCode == 13){searchmember();}")
+		aside.appendChild(search);
+
 		let memberlist = document.createElement("ul");
 		memberlist.setAttribute("id","memberlist");
 		aside.appendChild(memberlist);
@@ -35,6 +43,7 @@
 		for(let i =0; i < number; i++){
 			let member = document.createElement("li");
 			member.setAttribute("id","member"+i);
+			member.setAttribute("class","members");
 			//이렇게 클릭 이벤트를 걸어준다
 			//member.setAttribute("onclick","함수이름");
 			memberlist.appendChild(member);
@@ -45,33 +54,14 @@
 		let container = document.createElement("div");
 		container.setAttribute("id", "container");
 
-		//지도
-		let maparea = document.createElement("div");
-		maparea.setAttribute("id", "map");
-
-		let start = document.createElement("input");
-		start.setAttribute("type","text");
-		start.setAttribute("value","시작마크");
-		start.setAttribute("id","start");
-		start.setAttribute("class","dtext");
-
-		let end = document.createElement("input");
-		end.setAttribute("type","text");
-		end.setAttribute("value","도착마크");
-		end.setAttribute("id","end");
-		end.setAttribute("class","dtext");
-
-		let distance = document.createElement("input");
-		distance.setAttribute("type","button");
-		distance.setAttribute("onclick","getDistance()");
-		distance.setAttribute("value","거리재기");
-		distance.setAttribute("id","dis");
-	
-		let buttonarea = document.createElement("div");
-		buttonarea.setAttribute("id","buttonarea")
 		let eleul = document.createElement("ul");
 		eleul.setAttribute("id", "menu");
 		
+		// 조별버튼이 들어갈 메뉴바
+		let menuarea = document.createElement("div");
+		menuarea.setAttribute("id","menuarea");
+		menuarea.appendChild(eleul);
+
 		// 조별버튼
 		let partnumber = 8;
 		for (let i = 1; i < partnumber; i++) {
@@ -97,16 +87,36 @@
 		}
 
 		
-		let distancebutton = document.createElement("div");
-		distancebutton.setAttribute("id","distancebutton");
+
+		//지도
+		let maparea = document.createElement("div");
+		maparea.setAttribute("id", "map");
+
+		// 좌표간 거리 구하는 버튼
+		let start = document.createElement("input");
+		start.setAttribute("type","text");
+		start.setAttribute("value","시작마크");
+		start.setAttribute("id","start");
+		start.setAttribute("class","dtext");
+
+		let end = document.createElement("input");
+		end.setAttribute("type","text");
+		end.setAttribute("value","도착마크");
+		end.setAttribute("id","end");
+		end.setAttribute("class","dtext");
+
+		let distance = document.createElement("input");
+		distance.setAttribute("type","button");
+		distance.setAttribute("onclick","getDistance()");
+		distance.setAttribute("value","거리재기");
+		distance.setAttribute("id","dis");
+	
+		let buttonarea = document.createElement("div");
+		buttonarea.setAttribute("id","buttonarea")
 		
-		distancebutton.appendChild(start);
-		distancebutton.appendChild(end);
-
-		distancebutton.appendChild(distance);
-
-		buttonarea.appendChild(distancebutton);
-		buttonarea.appendChild(eleul);
+		buttonarea.appendChild(start);
+		buttonarea.appendChild(end);
+		buttonarea.appendChild(distance);
 
 		let result = document.createElement("p");
 		result.setAttribute("id","result");
@@ -118,7 +128,7 @@
 		wrap.appendChild(container);
 
 		
-
+		container.appendChild(menuarea);
 		container.appendChild(maparea);
 		container.appendChild(buttonarea);
 		container.appendChild(result);
@@ -256,10 +266,12 @@
 			memberinfo += students[i].name;
 			let info = document.createTextNode(memberinfo);
 			document.getElementById("member"+i).appendChild(info);
+			document.getElementById("member"+i).setAttribute("name",memberinfo);
 		} else{
 			memberinfo += students[i].department + "조 " + students[i].name;
 			let info = document.createTextNode(memberinfo);
 			document.getElementById("member"+i).appendChild(info);
+			document.getElementById("member"+i).setAttribute("name",memberinfo);
 		}
 	}
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
@@ -415,5 +427,21 @@
 
 	});
 
+	//검색 기능
+	function searchmember(){
+		//console.log(document.getElementById("search").value);
+		let searchval = document.getElementById("search").value;
+		let members = document.getElementsByClassName("members");
+
+		//for( let i =0; i < members.length; i++){
+			if( members.name != searchval ){
+				$(members).hide();
+				console.log(searchval);
+			} else{
+				$(members).show();
+			}
+		//}
+		
+	}
 </script>
 </html>
