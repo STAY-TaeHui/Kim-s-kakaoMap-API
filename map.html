@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html >
 <head>
 <meta charset="utf-8" />
 <title>Kakao 지도 시작하기</title>
@@ -135,7 +135,7 @@
 </script>
 
 </body>
-<script>
+<script> 
 
 	var students = [ {
 		"department" : 0,
@@ -259,6 +259,7 @@
 	];
 
 	// 위의 정보 왼쪽 리스트박스에 넣어주기
+	
 	let memberinfo;
 	for(let i in students){
 		memberinfo="";
@@ -272,6 +273,7 @@
 			document.getElementById("member"+i).appendChild(info);
 		}
 	}
+	
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 	mapOption = {
 		center : new kakao.maps.LatLng(37.50302603815009, 127.02421346491303), // 지도의 중심좌표
@@ -427,14 +429,14 @@
 
 	//검색 기능
 	function searchmember(){
-		//console.log(document.getElementById("search").value);
+
 		let searchval = document.getElementById("search").value;
 		let members = document.getElementsByClassName("members");
 
 		for( let i =0; i < members.length; i++){
 			if( !members[i].innerHTML.includes(searchval) ){
 				members[i].style.display = "none";
-				//console.log(searchval);
+
 			} else{ // 이 블럭이 없으면 검색 결과 내에서만 재검색이 된다
 				members[i].style.display = "block";
 			}
