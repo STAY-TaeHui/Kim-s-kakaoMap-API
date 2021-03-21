@@ -9,10 +9,15 @@
 
 <body>
 
+	<!-- 화면 시작시 흐려질 파란 박스-->
+	<div class = "cover">
+
+	</div>
+
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=843a110ed4c9eea5cfd6884e22de3050&libraries=clusterer,services,drawing"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript">
 
 		//전체 인원수 +1
@@ -21,7 +26,7 @@
 
 		// 페이지 제목
 		let header = document.createElement("header");
-		let title = document.createTextNode("BitMap.bit");
+		let title = document.createTextNode("BITMAP");
 		header.appendChild(title);
 
 		// 메인 컨텐츠 전체를 감싸는 박스
@@ -47,10 +52,11 @@
 			let member = document.createElement("li");
 			member.setAttribute("id", "member" + i);
 			member.setAttribute("class", "members");
-			//이렇게 클릭 이벤트를 걸어준다
-			//member.setAttribute("onclick","함수이름");
+			//비트캠프 클릭이벤트
+			if(i == 0){
+				member.setAttribute("onclick","showMarkers(0);");
+			}
 			memberlist.appendChild(member);
-
 		}
 
 		//svg를 사용할 마우스(수정중)
@@ -497,11 +503,14 @@
         var length = Math.round(polyline.getLength() / 1000);
 		
 		if( startLa == undefined || endLa == undefined){
-			result.innerHTML="비교할 좌표를 선택해주세요";
+			swal("비교할 좌표를 선택해주세요!");
+			//result.innerHTML="비교할 좌표를 선택해주세요";
 		} else if(startLa == endLa && startMa == endMa){
-			result.innerHTML = "같은 장소입니다";
+			swal("같은 장소입니다!");
+			//result.innerHTML = "같은 장소입니다";
 			console.log(sL,eL);
 		} else {
+			swal(length + "km 차이가 납니다");
 			result.innerHTML = length + "km 차이가 납니다";
 		}
 
@@ -519,7 +528,6 @@
         startMa = undefined;
         endLa = undefined;
         endMa = undefined;
-
 		result.innerHTML="";
 
     }
@@ -542,11 +550,17 @@
 
 		let searchval = document.getElementById("search").value;
 		let members = document.getElementsByClassName("members");
-
+		let count = members.length;
 		for (let i = 0; i < members.length; i++) {
 			if (!members[i].innerHTML.includes(searchval)) {
 				members[i].style.display = "none";
-
+				count--;
+				if(count == 0){
+				swal("일치하는 결과가 없습니다");
+				for(let j = 0; j < members.length; j++){
+					members[j].style.display = "block";
+				}				
+			}
 			} else { // 이 블럭이 없으면 검색 결과 내에서만 재검색이 된다
 				members[i].style.display = "block";
 			}
