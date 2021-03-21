@@ -323,6 +323,21 @@
 							result[0].x);
 						// 마커를 생성합니다
 					}
+					if (index == 0) {
+                        var circle = new kakao.maps.Circle({
+                            center: coords,  // 원의 중심좌표 입니다 
+                            radius: 10000, // 미터 단위의 원의 반지름입니다 
+                            strokeWeight: 3, // 선의 두께입니다 
+                            strokeColor: '#75B8FA', // 선의 색깔입니다
+                            strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                            strokeStyle: 'dashed', // 선의 스타일 입니다
+                            fillColor: '#031e79', // 채우기 색깔입니다
+                            fillOpacity: 0.3  // 채우기 불투명도 입니다   
+                        });
+
+                        // 지도에 원을 표시합니다 
+                        circle.setMap(map);
+                    }
 
 					var marker;
                     if (students[index].department === 0) {   //department가 0이면 "비트캠프" >> 마커에 이미지 입혀주기
