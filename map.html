@@ -518,23 +518,23 @@
 			}
 		}
 	}
-		let members = document.querySelector("ul");
-		members.addEventListener("click",(event)=>{
+		// let members = document.querySelector("ul");
+		// members.addEventListener("click",(event)=>{
 
-			let position;
-			let marker_name =  event.target.id;
-			console.log(marker_name.substr(marker_name.length-1))
-			for(let index in markers){
-				console.log(markers[index].getTitle())
-				if(markers[index].getTitle() ===  marker_name.substr(marker_name.length-1)){
-					console.log(marker_name)
-					console.log(markers[index].position)
-					position = markers[index].position;
-					map.setCenter(position)
-				}
-			}
+		// 	let position;
+		// 	let marker_name =  event.target.id;
+		// 	console.log(marker_name.substr(marker_name.length-1))
+		// 	for(let index in markers){
+		// 		console.log(markers[index].getTitle())
+		// 		if(markers[index].getTitle() ===  marker_name.substr(marker_name.length-1)){
+		// 			console.log(marker_name)
+		// 			console.log(markers[index].position)
+		// 			position = markers[index].position;
+		// 			map.setCenter(position)
+		// 		}
+		// 	}
 
-		})
+		// })
 
 	
 	
