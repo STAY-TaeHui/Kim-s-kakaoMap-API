@@ -9,10 +9,15 @@
 
 <body>
 
+	<!-- 화면 시작시 흐려질 파란 박스-->
+	<div class = "cover">
+
+	</div>
+
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=843a110ed4c9eea5cfd6884e22de3050&libraries=clusterer,services,drawing"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript">
 
 		//전체 인원수 +1
@@ -21,7 +26,7 @@
 
 		// 페이지 제목
 		let header = document.createElement("header");
-		let title = document.createTextNode("BitMap.bit");
+		let title = document.createTextNode("BITMAP");
 		header.appendChild(title);
 
 		// 메인 컨텐츠 전체를 감싸는 박스
@@ -47,10 +52,11 @@
 			let member = document.createElement("li");
 			member.setAttribute("id", "member" + i);
 			member.setAttribute("class", "members");
-			//이렇게 클릭 이벤트를 걸어준다
-			//member.setAttribute("onclick","함수이름");
+			//비트캠프 클릭이벤트
+			if(i == 0){
+				member.setAttribute("onclick","showMarkers(0);");
+			}
 			memberlist.appendChild(member);
-
 		}
 
 		//svg를 사용할 마우스(수정중)
@@ -336,62 +342,60 @@
 						// 마커를 생성합니다
 					}
 					if (index == 0) {
-                        var circle = new kakao.maps.Circle({
-                            center: coords,  // 원의 중심좌표 입니다 
-                            radius: 10000, // 미터 단위의 원의 반지름입니다 
-                            strokeWeight: 3, // 선의 두께입니다 
-                            strokeColor: '#75B8FA', // 선의 색깔입니다
-                            strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                            strokeStyle: 'dashed', // 선의 스타일 입니다
-                            fillColor: '#031e79', // 채우기 색깔입니다
-                            fillOpacity: 0.3  // 채우기 불투명도 입니다   
-                        });
+						var circle = new kakao.maps.Circle({
+							center: coords,  // 원의 중심좌표 입니다 
+							radius: 10000, // 미터 단위의 원의 반지름입니다 
+							strokeWeight: 3, // 선의 두께입니다 
+							strokeColor: '#75B8FA', // 선의 색깔입니다
+							strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+							strokeStyle: 'dashed', // 선의 스타일 입니다
+							fillColor: '#031e79', // 채우기 색깔입니다
+							fillOpacity: 0.3  // 채우기 불투명도 입니다   
+						});
 
-                        // 지도에 원을 표시합니다 
-                        circle.setMap(map);
-                    }
+						// 지도에 원을 표시합니다 
+						circle.setMap(map);
+					}
 
 					var marker;
-                    if (students[index].department === 0) {   //department가 0이면 "비트캠프" >> 마커에 이미지 입혀주기
-                        var imageSrc =
-                            "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-                        // 마커 이미지의 이미지 크기 입니다
-                        var imageSize = new kakao.maps.Size(24, 35);
-                        // 마커 이미지를 생성합니다
-                        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-                        // 마커를 생성합니다
-                        marker = new kakao.maps.Marker({
-                            map: map, // 마커를 표시할 지도
-                            position: coords,
-                            image: markerImage, // 마커 이미지
-                            title: students[index].department
-                        });
-                    } else {                            //department가 0이 아니면 조원들 >> 기본 마커
-                        marker = new kakao.maps.Marker({
-                            map: map,
-                            position: coords,
-                            title: students[index].department,
-                            width: 11,
-                            height: 11
-                        });
-                    }
-                    var infowindow;
-                    if (students[index].department == 0) {          //비트캠프 infowindow
-                        infowindow = new kakao.maps.InfoWindow({
-                            content:
-                                '<div style="width:150px;text-align:center;padding:6px 0;">' +
-                                students[index].name +
-                                "</div>",
-                        });
-                    }
-                    else {                                     //조원들 infowindow
-                        infowindow = new kakao.maps.InfoWindow({
-                            content:
-                                '<div style="width:150px;text-align:center;padding:6px 0;">' +
-                                students[index].department + "조 " + students[index].name +
-                                "</div>",
-                        });
-                    }
+					if (students[index].department === 0) {   //department가 0이면 "비트캠프" >> 마커에 이미지 입혀주기
+						var imageSrc =
+							"https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+						// 마커 이미지의 이미지 크기 입니다
+						var imageSize = new kakao.maps.Size(24, 35);
+						// 마커 이미지를 생성합니다
+						var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+						// 마커를 생성합니다
+						marker = new kakao.maps.Marker({
+							map: map, // 마커를 표시할 지도
+							position: coords,
+							image: markerImage, // 마커 이미지
+							title: students[index].department
+						});
+					} else {                            //department가 0이 아니면 조원들 >> 기본 마커
+						marker = new kakao.maps.Marker({
+							map: map,
+							position: coords,
+							title: students[index].department,
+						});
+					}
+					var infowindow;
+					if (students[index].department == 0) {          //비트캠프 infowindow
+						infowindow = new kakao.maps.InfoWindow({
+							content:
+								'<div style="width:150px;text-align:center;padding:6px 0;">' +
+								students[index].name +
+								"</div>",
+						});
+					}
+					else {                                     //조원들 infowindow
+						infowindow = new kakao.maps.InfoWindow({
+							content:
+								'<div style="width:150px;text-align:center;padding:6px 0;">' +
+								students[index].department + "조 " + students[index].name +
+								"</div>",
+						});
+					}
 
 					// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
 					// 이벤트 리스너로는 클로저를 만들어 등록합니다 
@@ -423,6 +427,7 @@
 					markers.push(marker);
 				})
 	}
+
 	function makeOverListener(map, marker, infowindow) {
 		return function () {
 			infowindow.open(map, marker);
@@ -456,27 +461,28 @@
 		hideMarkers(0);
 		setMarkers(map, team_num);
 	}
-	
+
 	// "마커 보이기"와 같은 이벤트에 걸리는 함수 왼쪽 리스트 필터
-	function showlist(team_num){
-		
+	function showlist(team_num) {
+
 		let members = document.getElementsByClassName("members");
 
 		for (let i = 1; i < members.length; i++) {
-		if ( team_num <6 &&!members[i].innerHTML.includes(team_num+"조")){
-			members[i].style.display = "none";
-		}else{
-			members[i].style.display = "block";
+			if (team_num < 6 && !members[i].innerHTML.includes(team_num + "조")) {
+				members[i].style.display = "none";
+			} else {
+				members[i].style.display = "block";
+			}
 		}
 	}
-	}
+
 
 	// 조별 버튼 클릭 시 호출되는 함수 걸어주기
 	for(let i = 1; i < 8; i++){
 		document.getElementById(i).addEventListener("click", function(event){
 			if( i ==6){
 				showMarkers(0);
-			} else{
+			} else {
 				showMarkers(i);
 			}
 			showlist(i);
@@ -497,11 +503,14 @@
         var length = Math.round(polyline.getLength() / 1000);
 		
 		if( startLa == undefined || endLa == undefined){
-			result.innerHTML="비교할 좌표를 선택해주세요";
+			swal("비교할 좌표를 선택해주세요!");
+			//result.innerHTML="비교할 좌표를 선택해주세요";
 		} else if(startLa == endLa && startMa == endMa){
-			result.innerHTML = "같은 장소입니다";
+			swal("같은 장소입니다!");
+			//result.innerHTML = "같은 장소입니다";
 			console.log(sL,eL);
 		} else {
+			swal(length + "km 차이가 납니다");
 			result.innerHTML = length + "km 차이가 납니다";
 		}
 
@@ -514,14 +523,11 @@
         result.setAttribute("value","");
         start.setAttribute("value","");
         end.setAttribute("value","");
-        startLa = 0;
-        startMa = 0;
-        endLa = 0;
-        endMa = 0;
-		startLa = undefined;
-		endLa = undefined;
-		startMa = undefined;
-		endMa = undefined;
+
+        startLa = undefined;
+        startMa = undefined;
+        endLa = undefined;
+        endMa = undefined;
 		result.innerHTML="";
 
     }
@@ -544,17 +550,42 @@
 
 		let searchval = document.getElementById("search").value;
 		let members = document.getElementsByClassName("members");
-
+		let count = members.length;
 		for (let i = 0; i < members.length; i++) {
 			if (!members[i].innerHTML.includes(searchval)) {
 				members[i].style.display = "none";
-
+				count--;
+				if(count == 0){
+				swal("일치하는 결과가 없습니다");
+				for(let j = 0; j < members.length; j++){
+					members[j].style.display = "block";
+				}				
+			}
 			} else { // 이 블럭이 없으면 검색 결과 내에서만 재검색이 된다
 				members[i].style.display = "block";
 			}
 		}
 	}
+		// let members = document.querySelector("ul");
+		// members.addEventListener("click",(event)=>{
 
+		// 	let position;
+		// 	let marker_name =  event.target.id;
+		// 	console.log(marker_name.substr(marker_name.length-1))
+		// 	for(let index in markers){
+		// 		console.log(markers[index].getTitle())
+		// 		if(markers[index].getTitle() ===  marker_name.substr(marker_name.length-1)){
+		// 			console.log(marker_name)
+		// 			console.log(markers[index].position)
+		// 			position = markers[index].position;
+		// 			map.setCenter(position)
+		// 		}
+		// 	}
+
+		// })
+
+	
+	
 </script>
 
 </html>
