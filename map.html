@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html>
 <head>
 <meta charset="utf-8" />
 <title>Kakao 지도 시작하기</title>
@@ -17,6 +17,8 @@
 		//전체 인원수 +1
 		let number = 29;
 
+		
+		// 페이지 제목
 		let header = document.createElement("header");
 		let title = document.createTextNode("BitMap.bit");
 		header.appendChild(title);
@@ -31,7 +33,7 @@
 		// 왼쪽 리스트박스 검색
 		let search = document.createElement("input");
 		search.setAttribute("id","search");
-		search.setAttribute("value","검색");
+		search.setAttribute("placeholder","검색");
 		search.setAttribute("onkeypress","if(event.keyCode == 13){searchmember();}")
 		aside.appendChild(search);
 
@@ -49,6 +51,14 @@
 			memberlist.appendChild(member);
 
 		}
+
+		//svg를 사용할 마우스(수정중)
+		let mouse = document.createElement("svg");
+		mouse.setAttribute("id","mouse");
+		let g = document.createElement("g");
+		g.setAttribute("fill","none");
+
+		aside.appendChild(mouse);
 
 		// 지도와 기능 버튼 구역을 감싸는 컨테이너
 		let container = document.createElement("div");
@@ -81,12 +91,9 @@
 			} else{
 				menubutton.setAttribute("onclick", "hideMarkers("+0+")");
 				menubutton.setAttribute("value", "모두감추기");
-			}
-						
+			}						
 			eleli.appendChild(menubutton);
 		}
-
-		
 
 		//지도
 		let maparea = document.createElement("div");
@@ -95,13 +102,13 @@
 		// 좌표간 거리 구하는 버튼
 		let start = document.createElement("input");
 		start.setAttribute("type","text");
-		start.setAttribute("value","시작마크");
+		start.setAttribute("placeholder","시작마크");
 		start.setAttribute("id","start");
 		start.setAttribute("class","dtext");
 
 		let end = document.createElement("input");
 		end.setAttribute("type","text");
-		end.setAttribute("value","도착마크");
+		end.setAttribute("placeholder","도착마크");
 		end.setAttribute("id","end");
 		end.setAttribute("class","dtext");
 
@@ -126,7 +133,6 @@
 		document.body.appendChild(wrap);
 		wrap.appendChild(aside);
 		wrap.appendChild(container);
-
 		
 		container.appendChild(menuarea);
 		container.appendChild(maparea);
