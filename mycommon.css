@@ -12,6 +12,10 @@
 	outline:none;
 }
 
+*{
+	z-index: 0;
+}
+
 header{
 	width:1200px;
 	height:50px;
@@ -55,6 +59,7 @@ header{
 	color:white;
 	transition:500ms;
 	letter-spacing: 2px;
+	cursor:pointer;
 
   }
 
@@ -78,6 +83,10 @@ aside{
 	overflow:auto;
 	height: 100%;
 }
+
+#memberlist:hover{
+	cursor:row-resize;
+}
 #memberlist li{
 	width:180px;
 	height:30px;
@@ -96,46 +105,9 @@ aside{
 	padding-top:10px;
 	transition:500ms;
 	letter-spacing: 2px;
+	cursor:pointer;
 
 }
-
-
-
-#mouse {
-	z-index: -1;
-	width: 30px;
-	height: 50px;
-}
-.scroll {
-	animation-name: scroll;
-	animation-duration: 1.5s;
-	animation-timing-function: cubic-bezier(0.650, -0.550, 0.250, 1.500);
-	animation-iteration-count: infinite;
-	transform-origin: 50% 20.5px;
-	will-change: transform, opacity;
-	opacity: 1;
-}
-
-.scroll-link {
-	position: absolute;
-	bottom: 1rem;
-	left: 50%;
-	transform: translateX(-50%);
-}
-@keyframes scroll {
-
-0%, 20% {
-    transform: translateY(0) scaleY(1);
-}
-
-100% {
-    transform: translateY(36px) scaleY(2);
-    opacity: 0;
-}
-
-}
-
-
 
 #container {
 	width:1000px;
@@ -159,7 +131,7 @@ aside{
 #buttonarea{
 	display:flex;
 	justify-content: space-between;
-	margin:20px 0; 
+	margin:20px 0 10px 0; 
   }
 
 .dis {
@@ -177,6 +149,7 @@ aside{
 	color:#fff;
 	transition:1s;
 	letter-spacing: 2px;
+	cursor:pointer;
 
   }
 .dtext {
@@ -191,5 +164,6 @@ aside{
 }
 
 #result{
-	height:100px;
+	height:80px;
+	color:#5d99c6;
 }
