@@ -115,12 +115,20 @@
 		end.setAttribute("placeholder", "도착마크");
 		end.setAttribute("id", "end");
 		end.setAttribute("class", "dtext");
-
+		
+		//거리 재기 버튼
 		let distance = document.createElement("input");
 		distance.setAttribute("type", "button");
 		distance.setAttribute("onclick", "getDistance()");
 		distance.setAttribute("value", "거리재기");
-		distance.setAttribute("id", "dis");
+		distance.setAttribute("class", "dis");
+
+		//거리 삭제 버튼
+		let redistance = document.createElement("input");
+		redistance.setAttribute("type", "button");
+		redistance.setAttribute("onclick", "resetDistance()");
+		redistance.setAttribute("value", "거리초기화");
+		redistance.setAttribute("class", "dis");
 
 		let buttonarea = document.createElement("div");
 		buttonarea.setAttribute("id", "buttonarea")
@@ -128,6 +136,7 @@
 		buttonarea.appendChild(start);
 		buttonarea.appendChild(end);
 		buttonarea.appendChild(distance);
+		buttonarea.appendChild(redistance);
 
 		let result = document.createElement("p");
 		result.setAttribute("id", "result");
@@ -461,9 +470,11 @@
 		}
 	}
 
-	for (let i = 1; i < 8; i++) {
-		document.getElementById(i).addEventListener("click", function (event) {
-			if (i == 6) {
+
+	// 조별 버튼 클릭 시 호출되는 함수 걸어주기
+	for(let i = 1; i < 8; i++){
+		document.getElementById(i).addEventListener("click", function(event){
+			if( i ==6){
 				showMarkers(0);
 			} else {
 				showMarkers(i);
@@ -472,23 +483,43 @@
 		});
 	}
 	function getDistance(sL, sM, eL, eM) {
-		var polyline = new daum.maps.Polyline({
-			/* map:map, */
-			path: [
-				new daum.maps.LatLng(startLa, startMa),
-				new daum.maps.LatLng(endLa, endMa)
-			],
-			strokeWeight: 2,
-			strokeColor: '#FF00FF',
-			strokeOpacity: 0.8,
-			strokeStyle: 'dashed'
-		});
+		var result = document.getElementById('result');
+        var polyline = new daum.maps.Polyline({
+            /* map:map, */
+            path : [ new daum.maps.LatLng(startLa, startMa),
+                    new daum.maps.LatLng(endLa, endMa) ],
+            strokeWeight : 2,
+            strokeColor : '#FF00FF',
+            strokeOpacity : 0.8,
+            strokeStyle : 'dashed'
+        });
 
-		//return getTimeHTML(polyline.getLength());//미터단위로 길이 반환;
-		var length = Math.round(polyline.getLength() / 1000);
-		console.log("길이" + length);
-		return length;
+        var length = Math.round(polyline.getLength() / 1000);
+		
+		if( startLa == null || endLa == null){
+			result.innerHTML="비교할 좌표를 선택해주세요";
+		} else if(startLa == endLa && startMa == endMa){
+			result.innerHTML = "같은 장소입니다";
+			console.log(sL,eL);
+		} else {
+			result.innerHTML = length + "km 차이가 납니다";
+		}
+
 	}
+
+	function resetDistance() {
+        var result = document.getElementById('result');
+        var start = document.getElementById('start');
+        var end = document.getElementById('end');
+        result.setAttribute("value","");
+        start.setAttribute("value","");
+        end.setAttribute("value","");
+        startLa = 0;
+        startMa = 0;
+        endLa = 0;
+        endMa = 0;
+		result.innerHTML="";
+    }
 
 	kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
 
