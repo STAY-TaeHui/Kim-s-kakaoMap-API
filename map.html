@@ -496,7 +496,7 @@
 
         var length = Math.round(polyline.getLength() / 1000);
 		
-		if( startLa == undefined || endLa == undefined){
+		if( startLa == null || endLa == null){
 			result.innerHTML="비교할 좌표를 선택해주세요";
 		} else if(startLa == endLa && startMa == endMa){
 			result.innerHTML = "같은 장소입니다";
