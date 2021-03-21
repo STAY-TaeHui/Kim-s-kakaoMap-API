@@ -8,6 +8,7 @@
 </head>
 
 <body>
+
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=843a110ed4c9eea5cfd6884e22de3050&libraries=clusterer,services,drawing"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -81,15 +82,18 @@
 			menubutton.setAttribute("type", "button");
 			menubutton.setAttribute("id", "" + i);
 			if (i < 6) {
-				menubutton.setAttribute("onclick", "showMarkers(" + i + ")");
+				//menubutton.setAttribute("onclick", "showMarkers(" + i + ")");
+				//menubutton.addEventListener("onclick", showMarkers(i),showlist(i));
 				menubutton.setAttribute("value", i + "조 보기");
 			} else if (i == 6) {
 
-				menubutton.setAttribute("onclick", "showMarkers(" + 0 + ")");
+				//menubutton.setAttribute("onclick", "showMarkers(" + 0 + ")");
+				//menubutton.addEventListener("onclick", showMarkers(0),showlist(i));
 				menubutton.setAttribute("value", "모두보기");
 
 			} else {
-				menubutton.setAttribute("onclick", "hideMarkers(" + 0 + ")");
+				//menubutton.setAttribute("onclick", "hideMarkers(" + 0 + ")");
+				//menubutton.addEventListener("onclick", hideMarkers(0),showlist(i));
 				menubutton.setAttribute("value", "모두감추기");
 			}
 			eleli.appendChild(menubutton);
@@ -432,8 +436,7 @@
 				markers[i].setMap(map);
 			}
 		}
-	}
-
+	}/*
 	// "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
 	function hideMarkers(team_num) {
 		setMarkers(null, team_num);
@@ -444,7 +447,7 @@
 		hideMarkers(0);
 		setMarkers(map, team_num);
 	}
-
+*/
 	function getDistance(sL, sM, eL, eM) {
 		var polyline = new daum.maps.Polyline({
 			/* map:map, */
@@ -492,6 +495,38 @@
 			}
 		}
 	}
+
+	// "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
+	function hideMarkers(team_num) {
+		setMarkers(null, team_num);
+	}
+
+	// "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
+	function showMarkers(team_num) {
+		hideMarkers(0);
+		setMarkers(map, team_num);
+	}
+
+	function showlist(team_num){
+		
+		let members = document.getElementsByClassName("members");
+
+		for (let i = 1; i < members.length; i++) {
+		if ( team_num <6 &&!members[i].innerHTML.includes(team_num+"조")){
+			members[i].style.display = "none";
+		}else{
+			members[i].style.display = "block";
+		}
+	}
+	}
+
+	for(let i = 1; i < 8; i++){
+		document.getElementById(i).addEventListener("click", function(event){
+			showMarkers(i);
+			showlist(i);
+		});
+	}
+
 </script>
 
 </html>
