@@ -436,7 +436,7 @@
 				markers[i].setMap(map);
 			}
 		}
-	}/*
+	}
 	// "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
 	function hideMarkers(team_num) {
 		setMarkers(null, team_num);
@@ -447,7 +447,31 @@
 		hideMarkers(0);
 		setMarkers(map, team_num);
 	}
-*/
+	
+	// "마커 보이기"와 같은 이벤트에 걸리는 함수 왼쪽 리스트 필터
+	function showlist(team_num){
+		
+		let members = document.getElementsByClassName("members");
+
+		for (let i = 1; i < members.length; i++) {
+		if ( team_num <6 &&!members[i].innerHTML.includes(team_num+"조")){
+			members[i].style.display = "none";
+		}else{
+			members[i].style.display = "block";
+		}
+	}
+	}
+
+	for(let i = 1; i < 8; i++){
+		document.getElementById(i).addEventListener("click", function(event){
+			if( i ==6){
+				showMarkers(0);
+			} else{
+				showMarkers(i);
+			}
+			showlist(i);
+		});
+	}
 	function getDistance(sL, sM, eL, eM) {
 		var polyline = new daum.maps.Polyline({
 			/* map:map, */
@@ -494,37 +518,6 @@
 				members[i].style.display = "block";
 			}
 		}
-	}
-
-	// "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
-	function hideMarkers(team_num) {
-		setMarkers(null, team_num);
-	}
-
-	// "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
-	function showMarkers(team_num) {
-		hideMarkers(0);
-		setMarkers(map, team_num);
-	}
-
-	function showlist(team_num){
-		
-		let members = document.getElementsByClassName("members");
-
-		for (let i = 1; i < members.length; i++) {
-		if ( team_num <6 &&!members[i].innerHTML.includes(team_num+"조")){
-			members[i].style.display = "none";
-		}else{
-			members[i].style.display = "block";
-		}
-	}
-	}
-
-	for(let i = 1; i < 8; i++){
-		document.getElementById(i).addEventListener("click", function(event){
-			showMarkers(i);
-			showlist(i);
-		});
 	}
 
 </script>
