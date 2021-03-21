@@ -496,7 +496,7 @@
 
         var length = Math.round(polyline.getLength() / 1000);
 		
-		if( startLa == null || endLa == null){
+		if( startLa == undefined || endLa == undefined){
 			result.innerHTML="비교할 좌표를 선택해주세요";
 		} else if(startLa == endLa && startMa == endMa){
 			result.innerHTML = "같은 장소입니다";
@@ -518,7 +518,12 @@
         startMa = 0;
         endLa = 0;
         endMa = 0;
+		startLa = undefined;
+		endLa = undefined;
+		startMa = undefined;
+		endMa = undefined;
 		result.innerHTML="";
+
     }
 
 	kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
