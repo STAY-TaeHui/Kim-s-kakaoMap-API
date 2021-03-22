@@ -12,6 +12,10 @@
 	outline:none;
 }
 
+*{
+	z-index: 0;
+}
+
 header{
 	width:1200px;
 	height:50px;
@@ -55,6 +59,7 @@ header{
 	color:white;
 	transition:500ms;
 	letter-spacing: 2px;
+	cursor:pointer;
 
   }
 
@@ -77,6 +82,13 @@ aside{
 #memberlist{
 	overflow:auto;
 	height: 100%;
+<<<<<<< HEAD
+=======
+}
+
+#memberlist:hover{
+	cursor:row-resize;
+>>>>>>> 54cb9f51a93dfd703d704ad25336c5438cba36f6
 }
 #memberlist li{
 	width:180px;
@@ -96,6 +108,7 @@ aside{
 	padding-top:10px;
 	transition:500ms;
 	letter-spacing: 2px;
+	cursor:pointer;
 
 }
 
@@ -159,7 +172,7 @@ aside{
 #buttonarea{
 	display:flex;
 	justify-content: space-between;
-	margin:20px 0; 
+	margin:20px 0 10px 0; 
   }
 
 .dis {
@@ -177,6 +190,7 @@ aside{
 	color:#fff;
 	transition:1s;
 	letter-spacing: 2px;
+	cursor:pointer;
 
   }
 .dtext {
@@ -191,5 +205,6 @@ aside{
 }
 
 #result{
-	height:100px;
+	height:80px;
+	color:#5d99c6;
 }
