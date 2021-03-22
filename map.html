@@ -3,19 +3,24 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>Kakao 지도 시작하기</title>
+	<title>BITMAP 시작하기</title>
 	<link rel="stylesheet" type="text/css" href="mycommon.css" />
 </head>
 
 <body>
 
-	<!-- 화면 시작시 흐려질 파란 박스-->
-	<div class = "cover">
-
-	</div>
+	<!-- svg를 사용한 마우스-->
+	<div id="mousebox">
+		<svg class="mouse" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 130" preserveAspectRatio="xMidYMid meet">
+		<g fill="#90caf9" fill-rule="evenodd">
+			<rect width="70" height="118" x="1.5" y="1.5" stroke="#FFF" stroke-width="3.5" rx="36"/>
+			<circle class="scroll" cx="36.5" cy="31.5" r="4.5" fill="#FFF"/>
+		</g>
+	</svg>
+</div>
 
 	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=843a110ed4c9eea5cfd6884e22de3050&libraries=clusterer,services,drawing"></script>
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=41f17cee36e4a34c104030460f12b2f0&libraries=clusterer,services,drawing"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript">
@@ -53,20 +58,14 @@
 			member.setAttribute("id", "member" + i);
 			member.setAttribute("class", "members");
 			//비트캠프 클릭이벤트
-			if(i == 0){
-				member.setAttribute("onclick","showMarkers(0);");
+			if (i == 0) {
+				member.setAttribute("onclick", "showMarkers(0);");
 			}
 			memberlist.appendChild(member);
 		}
 
-		//svg를 사용할 마우스(수정중)
-		let mouse = document.createElement("svg");
-		mouse.setAttribute("id", "mouse");
-		let g = document.createElement("g");
-		g.setAttribute("fill", "none");
-
-		aside.appendChild(mouse);
-
+		let mousebox = document.getElementById("mousebox");
+		aside.appendChild(mousebox);
 		// 지도와 기능 버튼 구역을 감싸는 컨테이너
 		let container = document.createElement("div");
 		container.setAttribute("id", "container");
@@ -88,18 +87,14 @@
 			menubutton.setAttribute("type", "button");
 			menubutton.setAttribute("id", "" + i);
 			if (i < 6) {
-				//menubutton.setAttribute("onclick", "showMarkers(" + i + ")");
-				//menubutton.addEventListener("onclick", showMarkers(i),showlist(i));
+
 				menubutton.setAttribute("value", i + "조 보기");
 			} else if (i == 6) {
 
-				//menubutton.setAttribute("onclick", "showMarkers(" + 0 + ")");
-				//menubutton.addEventListener("onclick", showMarkers(0),showlist(i));
 				menubutton.setAttribute("value", "모두보기");
 
 			} else {
-				//menubutton.setAttribute("onclick", "hideMarkers(" + 0 + ")");
-				//menubutton.addEventListener("onclick", hideMarkers(0),showlist(i));
+
 				menubutton.setAttribute("value", "모두감추기");
 			}
 			eleli.appendChild(menubutton);
@@ -121,7 +116,7 @@
 		end.setAttribute("placeholder", "도착마크");
 		end.setAttribute("id", "end");
 		end.setAttribute("class", "dtext");
-		
+
 		//거리 재기 버튼
 		let distance = document.createElement("input");
 		distance.setAttribute("type", "button");
@@ -341,7 +336,7 @@
 							result[0].x);
 						// 마커를 생성합니다
 					}
-					if (index == 0) {
+					if (index == 0) {//처음에 비트캠프 반경 10km의 원을 만들어 줍니다.
 						var circle = new kakao.maps.Circle({
 							center: coords,  // 원의 중심좌표 입니다 
 							radius: 10000, // 미터 단위의 원의 반지름입니다 
@@ -430,7 +425,7 @@
 
 	function makeOverListener(map, marker, infowindow) {
 		return function () {
-			infowindow.open(map, marker);
+			infowindow.open(map, marker);//infowindow를 map과 marker에 올려줍니다.
 		};
 	}
 
@@ -441,7 +436,7 @@
 		};
 	}
 
-	function setMarkers(map, team_num) {
+	function setMarkers(map, team_num) {			//마커들을 맵에 찍어주는 함수입니다.
 		for (var i = 0; i < markers.length; i++) {
 			if (team_num == 0) {
 				markers[i].setMap(map);
@@ -478,9 +473,9 @@
 
 
 	// 조별 버튼 클릭 시 호출되는 함수 걸어주기
-	for(let i = 1; i < 8; i++){
-		document.getElementById(i).addEventListener("click", function(event){
-			if( i ==6){
+	for (let i = 1; i < 8; i++) {
+		document.getElementById(i).addEventListener("click", function (event) {
+			if (i == 6) {
 				showMarkers(0);
 			} else {
 				showMarkers(i);
@@ -488,27 +483,27 @@
 			showlist(i);
 		});
 	}
-	function getDistance(sL, sM, eL, eM) {
+	function getDistance(sL, sM, eL, eM) {					//두 마커들 사이의 거리를 계산하는 함수입니다.
 		var result = document.getElementById('result');
-        var polyline = new daum.maps.Polyline({
-            /* map:map, */
-            path : [ new daum.maps.LatLng(startLa, startMa),
-                    new daum.maps.LatLng(endLa, endMa) ],
-            strokeWeight : 2,
-            strokeColor : '#FF00FF',
-            strokeOpacity : 0.8,
-            strokeStyle : 'dashed'
-        });
+		var polyline = new daum.maps.Polyline({
+			/* map:map, */
+			path: [new daum.maps.LatLng(startLa, startMa),
+			new daum.maps.LatLng(endLa, endMa)],
+			strokeWeight: 2,
+			strokeColor: '#FF00FF',
+			strokeOpacity: 0.8,
+			strokeStyle: 'dashed'
+		});
 
-        var length = Math.round(polyline.getLength() / 1000);
-		
-		if( startLa == undefined || endLa == undefined){
+		var length = Math.round(polyline.getLength() / 1000);
+
+		if (startLa == undefined || endLa == undefined) {
 			swal("비교할 좌표를 선택해주세요!");
 			//result.innerHTML="비교할 좌표를 선택해주세요";
-		} else if(startLa == endLa && startMa == endMa){
+		} else if (startLa == endLa && startMa == endMa) {
 			swal("같은 장소입니다!");
 			//result.innerHTML = "같은 장소입니다";
-			console.log(sL,eL);
+			console.log(sL, eL);
 		} else {
 			swal(length + "km 차이가 납니다");
 			result.innerHTML = length + "km 차이가 납니다";
@@ -516,21 +511,21 @@
 
 	}
 
-	function resetDistance() {
-        var result = document.getElementById('result');
-        var start = document.getElementById('start');
-        var end = document.getElementById('end');
-        result.setAttribute("value","");
-        start.setAttribute("value","");
-        end.setAttribute("value","");
+	function resetDistance() {	// 두 마커를 넣어주는 input박스의 값을 초기화 해주는 함수입니다.
+		var result = document.getElementById('result');
+		var start = document.getElementById('start');
+		var end = document.getElementById('end');
+		result.setAttribute("value", "");
+		start.setAttribute("value", "");
+		end.setAttribute("value", "");
 
-        startLa = undefined;
-        startMa = undefined;
-        endLa = undefined;
-        endMa = undefined;
-		result.innerHTML="";
+		startLa = undefined;
+		startMa = undefined;
+		endLa = undefined;
+		endMa = undefined;
+		result.innerHTML = "";
 
-    }
+	}
 
 	kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
 
@@ -545,7 +540,7 @@
 
 	});
 
-	//검색 기능
+	//리스트에서 검색 기능
 	function searchmember() {
 
 		let searchval = document.getElementById("search").value;
@@ -555,12 +550,12 @@
 			if (!members[i].innerHTML.includes(searchval)) {
 				members[i].style.display = "none";
 				count--;
-				if(count == 0){
-				swal("일치하는 결과가 없습니다");
-				for(let j = 0; j < members.length; j++){
-					members[j].style.display = "block";
-				}				
-			}
+				if (count == 0) {
+					swal("일치하는 결과가 없습니다");
+					for (let j = 0; j < members.length; j++) {
+						members[j].style.display = "block";
+					}
+				}
 			} else { // 이 블럭이 없으면 검색 결과 내에서만 재검색이 된다
 				members[i].style.display = "block";
 			}
@@ -584,8 +579,6 @@
 
 		// })
 
-	
-	
 </script>
 
 </html>
